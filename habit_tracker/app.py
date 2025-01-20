@@ -19,6 +19,13 @@ def load_data():
     if os.path.exists(HABITS_FILE):
         with open(HABITS_FILE, 'r') as f:
             st.session_state.habits = json.load(f)
+
+        # Ensure every habit has required fields
+        for habit_name, habit_data in st.session_state.habits.items():
+            if 'target' not in habit_data:
+                habit_data['target'] = 1   # some default
+            if 'type' not in habit_data:
+                habit_data['type'] = 'Count'  # some default
     
     if os.path.exists(PROGRESS_FILE):
         with open(PROGRESS_FILE, 'r') as f:
